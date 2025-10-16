@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Get DOM elements
   const playerForm = document.getElementById("player-form");
   const gameBoard = document.getElementById("game-board");
-  const player1Input = document.getElementById("player-1");
-  const player2Input = document.getElementById("player-2");
+  const player1Input = document.getElementById("player1");
+  const player2Input = document.getElementById("player2");
   const submitBtn = document.getElementById("submit");
   const messageDiv = document.getElementById("message");
   const boardDiv = document.getElementById("board");
