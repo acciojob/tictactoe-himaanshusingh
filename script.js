@@ -1,4 +1,4 @@
-//your JS code here. If required.
+// your JS code here. If required.
 document.addEventListener("DOMContentLoaded", function () {
   // Get DOM elements
   const playerForm = document.getElementById("player-form");
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const player2Info = document.getElementById("player2-info");
 
   // Game state
-  let currentPlayer = "X";
+  let currentPlayer = "x";
   let player1Name = "";
   let player2Name = "";
   let gameActive = true;
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Submit button click handler
   submitBtn.addEventListener("click", function () {
-    player1Name = player1Input.value.trim() || "Player 1";
-    player2Name = player2Input.value.trim() || "Player 2";
+    player1Name = player1Input.value.trim() || "Player1";
+    player2Name = player2Input.value.trim() || "Player2";
 
     if (player1Name && player2Name) {
       player1NameSpan.textContent = player1Name;
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       // Display winner message
-      const winnerName = currentPlayer === "X" ? player1Name : player2Name;
+      const winnerName = currentPlayer === "x" ? player1Name : player2Name;
       messageDiv.textContent = `${winnerName}, congratulations you won!`;
       gameActive = false;
       return;
@@ -118,17 +118,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Continue game
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    currentPlayer = currentPlayer === "x" ? "o" : "x";
     updateMessage();
   }
 
   // Update message and player indicators
   function updateMessage() {
-    const currentPlayerName = currentPlayer === "X" ? player1Name : player2Name;
-    messageDiv.textContent = `${currentPlayerName}, you're up!`;
+    const currentPlayerName = currentPlayer === "x" ? player1Name : player2Name;
+    messageDiv.textContent = `${currentPlayerName} congratulations you won!`;
 
     // Update active player indicator
-    if (currentPlayer === "X") {
+    if (currentPlayer === "x") {
       player1Info.classList.add("active");
       player1Info.classList.remove("inactive");
       player2Info.classList.add("inactive");
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Reset the game
   function resetGame() {
-    currentPlayer = "X";
+    currentPlayer = "x";
     gameActive = true;
     gameState = ["", "", "", "", "", "", "", "", ""];
 
