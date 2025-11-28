@@ -16,7 +16,7 @@ startBtn.addEventListener("click", () => {
   if (userOne.value != "" && userTwo.value != "") {
     userContainer.classList.toggle("display-none");
     gameBoard.classList.toggle("display-none");
-    message.innerText = `${userOne.value}, your're up`;
+    message.innerText = `${userOne.value}, you're up`;
     currentUser = userOne.value;
     gameStart = true;
   }
@@ -29,11 +29,11 @@ cells.forEach((cell) => {
           if (currentUser === userOne.value) {
             cell.innerText = "x";
             currentUser = userTwo.value;
-            message.innerText = `${currentUser}, your're up`;
+            message.innerText = `${currentUser}, you're up`;
           } else {
             cell.innerText = "o";
             currentUser = userOne.value;
-            message.innerText = `${currentUser}, your're up`;
+            message.innerText = `${currentUser}, you're up`;
           }
           checkWinner();
         }, { once: true });
