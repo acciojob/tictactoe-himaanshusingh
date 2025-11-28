@@ -3,8 +3,8 @@ const userContainer = document.querySelector(".user-details-container");
 const userOne = document.querySelector("#player-1");
 const userTwo = document.querySelector("#player-2");
 const startBtn = document.querySelector("#submit");
-const gameBoard = document.querySelector(".board-container");
-const boxes = document.querySelectorAll(".box");
+const gameBoard = document.querySelector(".board");
+const cells = document.querySelectorAll(".cell");
 const message = document.querySelector(".message");
 
 // Create two flags and initialize it with falsy value.
@@ -16,39 +16,37 @@ startBtn.addEventListener("click", () => {
   if (userOne.value != "" && userTwo.value != "") {
     userContainer.classList.toggle("display-none");
     gameBoard.classList.toggle("display-none");
-    const firstUser = userOne.value;
-    const secondUser = userTwo.value;
-    message.innerText = `${firstUser}, your're up`;
-    currentUser = firstUser;
+    message.innerText = `${userOne.value}, your're up`;
+    currentUser = userOne.value;
     gameStart = true;
   }
 });
 
 // Add event listener in all boxes to change the innerText.
-boxes.forEach((box) => {
-  box.addEventListener("click", () => {
+cells.forEach((cell) => {
+  cell.addEventListener("click", () => {
           if (!gameStart) return;
           if (currentUser === userOne.value) {
-            box.innerText = "x";
+            cell.innerText = "x";
             currentUser = userTwo.value;
             message.innerText = `${currentUser}, your're up`;
           } else {
-            box.innerText = "o";
+            cell.innerText = "o";
             currentUser = userOne.value;
             message.innerText = `${currentUser}, your're up`;
           }
           checkWinner();
-        }, { once: true }); // prettier-ignore
+        }, { once: true });
 });
 
 // Create a function checkWinner to stop the game if anyone wins or draw.
 function checkWinner() {
-  const values = Array.from(boxes).map((box) => box.innerText);
-  const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 4], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]; // prettier-ignore
+  const values = Array.from(cells).map((cell) => cell.innerText);
+  const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 4], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
   for (const combo of winningCombinations) {
     const [a, b, c] = combo;
     if (values[a] && values[a] === values[b] && values[a] === values[c]) {
-      const winnerName = values[a] === "x" ? userOne.value : userTwo.value; // prettier-ignore
+      const winnerName = values[a] === "x" ? userOne.value : userTwo.value;
       message.innerText = `${winnerName} congratulations you won!`;
       gameStart = false;
       return;
