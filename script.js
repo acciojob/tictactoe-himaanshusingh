@@ -1,64 +1,62 @@
-const playerForm = document.getElementById("player-form");
-const player1Input = document.getElementById("player1");
-const player2Input = document.getElementById("player2");
-const submitBtn = document.getElementById("submit");
-const gameArea = document.getElementById("game-area");
-const messageDiv = document.querySelector(".message");
-const cells = document.querySelectorAll(".cell");
+// First we will select all necessary nodes from document.
+const userContainer = document.querySelector(".user-details-container");
+const userOne = document.querySelector("#player-1");
+const userTwo = document.querySelector("#player-2");
+const startBtn = document.querySelector("#submit");
+const gameBoard = document.querySelector(".board-container");
+const boxes = document.querySelectorAll(".box");
+const message = document.querySelector(".message");
 
-let player1 = "";
-let player2 = "";
-let currentPlayer = "";
-let board = new Array(9).fill("");
-let gameOver = false;
+// Create two flags and initialize it with falsy value.
+let currentUser = "";
+let gameStart = false;
 
-submitBtn.addEventListener("click", () => {
-  player1 = player1Input.value.trim();
-  player2 = player2Input.value.trim();
-  if (!player1 || !player2) {
-    alert("Please enter names for both players!");
+// Add event listener on startBtn to start the game.
+startBtn.addEventListener("click", () => {
+  if (userOne.value != "" && userTwo.value != "") {
+    userContainer.classList.toggle("display-none");
+    gameBoard.classList.toggle("display-none");
+    const firstUser = userOne.value;
+    const secondUser = userTwo.value;
+    message.innerText = `${firstUser}, your're up`;
+    currentUser = firstUser;
+    gameStart = true;
+  }
+});
+
+// Add event listener in all boxes to change the innerText.
+boxes.forEach((box) => {
+  box.addEventListener("click", () => {
+          if (!gameStart) return;
+          if (currentUser === userOne.value) {
+            box.innerText = "x";
+            currentUser = userTwo.value;
+            message.innerText = `${currentUser}, your're up`;
+          } else {
+            box.innerText = "o";
+            currentUser = userOne.value;
+            message.innerText = `${currentUser}, your're up`;
+          }
+          checkWinner();
+        }, { once: true }); // prettier-ignore
+});
+
+// Create a function checkWinner to stop the game if anyone wins or draw.
+function checkWinner() {
+  const values = Array.from(boxes).map((box) => box.innerText);
+  const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 4], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]; // prettier-ignore
+  for (const combo of winningCombinations) {
+    const [a, b, c] = combo;
+    if (values[a] && values[a] === values[b] && values[a] === values[c]) {
+      const winnerName = values[a] === "x" ? userOne.value : userTwo.value; // prettier-ignore
+      message.innerText = `${winnerName} congratulations you won!`;
+      gameStart = false;
+      return;
+    }
+  }
+  if (values.every((val) => val !== "")) {
+    message.innerText = "It's a draw!";
+    gameStart = false;
     return;
   }
-  currentPlayer = player1;
-  playerForm.style.display = "none";
-  gameArea.style.display = "block";
-  messageDiv.textContent = `${currentPlayer}, you're up`;
-});
-
-const winningCombinations = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
-
-cells.forEach((cell, index) => {
-  cell.addEventListener("click", () => {
-    if (gameOver || board[index] !== "") return;
-    board[index] = currentPlayer === player1 ? "x" : "o";
-    cell.textContent = board[index];
-    if (checkWin()) {
-      messageDiv.textContent = `${currentPlayer} congratulations you won!`;
-      gameOver = true;
-      return;
-    }
-    if (!board.includes("")) {
-      messageDiv.textContent = "It's a draw!";
-      gameOver = true;
-      return;
-    }
-    currentPlayer = currentPlayer === player1 ? player2 : player1;
-    messageDiv.textContent = `${currentPlayer}, you're up`;
-  });
-});
-
-function checkWin() {
-  return winningCombinations.some((combo) => {
-    const [a, b, c] = combo;
-    return board[a] && board[a] === board[b] && board[b] === board[c];
-  });
 }
