@@ -1,7 +1,7 @@
 // First we will select all necessary nodes from document.
 const userContainer = document.querySelector(".user-details-container");
-const userOne = document.querySelector("#player-1");
-const userTwo = document.querySelector("#player-2");
+const userOne = document.querySelector("#player1");
+const userTwo = document.querySelector("#player2");
 const startBtn = document.querySelector("#submit");
 const gameBoard = document.querySelector(".board");
 const cells = document.querySelectorAll(".cell");
